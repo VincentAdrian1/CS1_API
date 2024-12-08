@@ -78,7 +78,7 @@ def add_employees():
 
         return make_response(jsonify({"message": "employee added successfully", "rows_affected": rows_affected}), 201)
     except Exception as e:
-        print(f"Error occurred: {e}")
+        print(f"Error occurred: {e}")  # Debugging line
         return make_response(jsonify({"Error": "Internal server error"}), 500)
 
     

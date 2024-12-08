@@ -86,13 +86,13 @@ def add_employees():
 def update_employees(id):
     try: 
         info = request.get_json()
-        required_fields = ["last_name", "first_name", "age", "department", "skills_idskills"]
+        required_fields = ["idemployees", "last_name", "first_name", "age", "department", "skills_idskills"]
 
         if not validate_input(info, required_fields):
             return make_response(jsonify({"Error": "Missing required fields"}), 400)
 
-        query = """UPDATE employees SET last_name = %s, first_name = %s, age = %s, department = %s, skills_idskills = %s WHERE idemployees = %s"""
-        params = (info["last_name"], info["first_name"], info["age"], info["department"], info["skills_idskills"], info["street_address"], info["city"], info["country"], id)
+        query = """UPDATE employees SET idemployees = %s, last_name = %s, first_name = %s, age = %s, department = %s, skills_idskills = %s WHERE idemployees = %s"""
+        params = (info["idemployees"], info["last_name"], info["first_name"], info["age"], info["department"], info["skills_idskills"], id)
         rows_affected = execute_query(query, params)
         return make_response(jsonify({"message": "employee updated successfully", "rows_affected": rows_affected}), 200)
     except Exception as e:

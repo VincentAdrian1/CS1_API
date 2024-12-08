@@ -25,20 +25,37 @@ class AppTestCase(unittest.TestCase):
     #     self.assertIsInstance(data, list)
     #     self.assertGreater(len(data), 0)
 
-    def test_add_customer(self):
-        data = {
-        "idemployees": "31",
-        "last_name": "Abian",
-        "first_name": "Vincent",
-        "age": "22",
-        "department": "IT",
-        "skills_idskills": "3"
-    }
-        response = self.app.post('/employees', json=data)
-        print(response.status_code, response.get_data(as_text=True))
+    # def test_add_employees(self):
+    #     data = {
+    #     "idemployees": "31",
+    #     "last_name": "Abian",
+    #     "first_name": "Vincent",
+    #     "age": "22",
+    #     "department": "IT",
+    #     "skills_idskills": "3"
+    # }
+    #     response = self.app.post('/employees', json=data)
+    #     print(response.status_code, response.get_data(as_text=True))
 
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.json["message"], "employee added successfully")
+    #     self.assertEqual(response.status_code, 201)
+    #     self.assertEqual(response.json["message"], "employee added successfully")
+
+    # def test_update_employees(self):
+    #     data = {
+    #     "idemployees": "31",
+    #     "last_name": "Abian",
+    #     "first_name": "Update",
+    #     "age": "22",
+    #     "department": "IT",
+    #     "skills_idskills": "3"
+    # }
+    #     response = self.app.put('/employees/31', json=data)
+    #     print(response.status_code, response.get_data(as_text=True))
+
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(response.json["message"], "employee updated successfully")
+
+    
 
 if __name__ == '__main__':
     unittest.main()

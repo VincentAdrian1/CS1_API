@@ -49,9 +49,19 @@ def employees():
        query = """Select concat(employees.first_name, " ", employees.last_name) as Full_Name, 
                         idemployees, age, department, skills_idskills FROM employees"""
        data = data_fetch(query)
-       return make_response(jsonify(data), 200)
+       return make_response(jsonify(data))
     except Exception as e:
         return make_response(jsonify({"success": False, "error": str(e)}))
+    
+@app.route("/employees/<int:id>")
+def get_by_id(id):
+    try:
+        query = """Select concat(employees.first_name, " ", employees.last_name) as Full_Name, 
+                        idemployees, age, department, skills_idskills FROM employees WHERE idemployees = %s"""
+        data = data_fetch(query, (id,))
+        return make_response(jsonify(data))
+    except Exception as e:
+        return make_response(jsonify({"Error": "Internal server error"}))
 
 
 if __name__ == "__main__":

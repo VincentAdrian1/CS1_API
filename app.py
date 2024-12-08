@@ -64,19 +64,23 @@ def get_by_id(id):
 
 @app.route("/employees", methods=["POST"])
 def add_employees():
-    try: 
+    try:
         info = request.get_json()
-        required_fields = ["last_name", "first_name", "age", "department", "skills_idskills"]
+        required_fields = ["idemployees", "last_name", "first_name", "age", "department", "skills_idskills"]
         
         if not validate_input(info, required_fields):
-            return make_response(jsonify({"Error": "Missing required fields"}))
+            return make_response(jsonify({"Error": "Missing required fields"}), 400)
 
-        query = """INSERT INTO employees (last_name, first_name, age, department, skills_idskills) VALUES (%s, %s, %s, %s, %s)"""
-        params = (info["last_name"], info["first_name"], info["age"], info["department"], info["skills_idskills"])
+        query = """INSERT INTO employees (idemployees, last_name, first_name, age, department, skills_idskills) 
+                   VALUES (%s, %s, %s, %s, %s, %s)"""
+        params = (info["idemployees"], info["last_name"], info["first_name"], info["age"], info["department"], info["skills_idskills"])
         rows_affected = execute_query(query, params)
-        return make_response(jsonify({"message": "customer added successfully", "rows_affected": rows_affected}), 201)
+
+        return make_response(jsonify({"message": "employee added successfully", "rows_affected": rows_affected}), 201)
     except Exception as e:
+        print(f"Error occurred: {e}")  # Debugging line
         return make_response(jsonify({"Error": "Internal server error"}), 500)
+
     
 @app.route("/employees/<int:id>", methods=["PUT"])
 def update_employees(id):
@@ -90,7 +94,7 @@ def update_employees(id):
         query = """UPDATE employees SET last_name = %s, first_name = %s, age = %s, department = %s, skills_idskills = %s WHERE idemployees = %s"""
         params = (info["last_name"], info["first_name"], info["age"], info["department"], info["skills_idskills"], info["street_address"], info["city"], info["country"], id)
         rows_affected = execute_query(query, params)
-        return make_response(jsonify({"message": "customer updated successfully", "rows_affected": rows_affected}), 200)
+        return make_response(jsonify({"message": "employee updated successfully", "rows_affected": rows_affected}), 200)
     except Exception as e:
         return make_response(jsonify({"Error": "Internal server error"}), 500)
     

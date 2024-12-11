@@ -69,16 +69,11 @@ def get_by_id(id):
 @app.route('/skilltbl', methods=["GET"])
 def skill_table():
     try:
-        query = """
-        SELECT 
-            s.skill_name AS skill_name, 
-            e.department AS department, 
-            COUNT(e.idemployees) AS num_employees
-        FROM employees e
-        JOIN skills s ON s.idskills = e.skills_idskills
-        GROUP BY s.skill_name, e.department
-        ORDER BY e.department, s.skill_name
-        """
+        query = """SELECT s.skill_name AS skill_name, e.department AS department, 
+                    COUNT(e.idemployees) AS num_employees FROM employees e
+                    JOIN skills s ON s.idskills = e.skills_idskills
+                    GROUP BY s.skill_name, e.department
+                    ORDER BY e.department, s.skill_name"""
         data = data_fetch(query)
 
         response = {"success": True, "data": data}
@@ -87,6 +82,30 @@ def skill_table():
     except Exception as e:
         error_response = {"success": False, "error": "Internal server error", "details": str(e)}
         return make_response(jsonify(error_response), 500)
+    
+@app.route('/skill_dept', methods=["GET"])
+def skills_by_department():
+    try:
+        department = request.args.get('department')
+        if not department:
+            return make_response(jsonify({"success": False, "error": "Missing required parameter: department"}), 400)
+
+        query = """SELECT s.skill_name AS skill_name, COUNT(e.idemployees) AS num_employees
+                    FROM employees e
+                    JOIN skills s ON s.idskills = e.skills_idskills
+                    WHERE e.department = %s
+                    GROUP BY s.skill_name
+                    ORDER BY s.skill_name"""
+        data = data_fetch(query, (department,))
+
+        response = {
+            "success": True, "department": department, "skills": data}
+
+        return make_response(jsonify(response), 200)
+    except Exception as e:
+        error_response = {"success": False, "error": "Internal server error", "details": str(e)}
+        return make_response(jsonify(error_response), 500)
+
     
 @app.route("/employees", methods=["POST"])
 def add_employees():

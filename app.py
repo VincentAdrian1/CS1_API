@@ -165,13 +165,13 @@ def skills_by_department():
 def add_skills():
     try:
         info = request.get_json()
-        required_fields = ["skill_name"]
+        required_fields = ["idskills", "skill_name"]
 
         if not validate_input(info, required_fields):
             return make_response(jsonify({"Error": "Missing required fields"}), 400)
 
-        query = """INSERT INTO skills (skill_name) VALUES (%s)"""
-        params = (info["skill_name"],)
+        query = """INSERT INTO skills (idskills, skill_name) VALUES (%s, %s)"""
+        params = (info["idskills"]), (info["skill_name"])
         rows_affected = execute_query(query, params)
 
         return make_response(jsonify({"message": "skill added successfully", "rows_affected": rows_affected}), 201)
@@ -183,7 +183,7 @@ def add_skills():
 def update_skills(id):
     try:
         info = request.get_json()
-        required_fields = ["skill_name"]
+        required_fields = ["idskills", "skill_name"]
 
         if not validate_input(info, required_fields):
             return make_response(jsonify({"Error": "Missing required fields"}), 400)

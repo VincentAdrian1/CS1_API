@@ -6,12 +6,12 @@ Rest API is  set of rules and conventions for building and interacting with web 
 
 Key principles of REST APIs:
 
-Stateless: Each request contains all the information needed, and the server doesn't store session data.
-Client-Server: The client and server are separate, enhancing scalability.
-Uniform Interface: It uses standardized HTTP methods, status codes, and data formats (e.g., JSON, XML).
-Resource-Based: Resources (data or services) are identified by unique URLs.
-Representation: Resources are represented in formats like JSON or XML.
-Cacheable: Responses can be cached to improve performance.
+- Stateless: Each request contains all the information needed, and the server doesn't store session data.
+- Client-Server: The client and server are separate, enhancing scalability.
+- Uniform Interface: It uses standardized HTTP methods, status codes, and data formats (e.g., JSON, XML).
+- Resource-Based: Resources (data or services) are identified by unique URLs.
+- Representation: Resources are represented in formats like JSON or XML.
+- Cacheable: Responses can be cached to improve performance.
 
 
 

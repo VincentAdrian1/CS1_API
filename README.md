@@ -15,10 +15,18 @@ Key principles of REST APIs:
 
 #### Common HTTP Methods in REST
 
-- #####GET: Retrieve data from the server.
-- #####POST: Send data to the server to create a new resource.
-- #####PUT: Update an existing resource on the server.
-- #####DELETE: Remove a resource from the server.
+- GET: Retrieve data from the server.
+- POST: Send data to the server to create a new resource.
+- PUT: Update an existing resource on the server.
+- DELETE: Remove a resource from the server.
+
+#### Example use of HTTP Methods in REST
+
+- GET `/users`: Get a list of all users
+- GET `/users/1`: Get the details of user with ID 1
+- POST `/users`: Create a new user
+- PUT `/users/1`: Update the details of user with ID 1
+- DELETE `/users/1`: Delete the user with ID 1
 
 
 ## Table of Contents

@@ -43,8 +43,7 @@ def validate_input(info, required_fields):
 
 @app.route('/')
 def home():
-    return "<h1>Employees Information</h1>"
-
+    return "<h1>Employees and Skills Information</h1>"
 
 @app.route('/employees', methods=["GET"])
 def employees():
@@ -65,47 +64,6 @@ def get_by_id(id):
         return make_response(jsonify(data), 200)
     except Exception as e:
         return make_response(jsonify({"Error": "Internal server error"}), 500)
-
-@app.route('/skilltbl', methods=["GET"])
-def skill_table():
-    try:
-        query = """SELECT s.skill_name AS skill_name, e.department AS department, 
-                    COUNT(e.idemployees) AS num_employees FROM employees e
-                    JOIN skills s ON s.idskills = e.skills_idskills
-                    GROUP BY s.skill_name, e.department
-                    ORDER BY e.department, s.skill_name"""
-        data = data_fetch(query)
-
-        response = {"success": True, "data": data}
-        
-        return make_response(jsonify(response), 200)
-    except Exception as e:
-        error_response = {"success": False, "error": "Internal server error", "details": str(e)}
-        return make_response(jsonify(error_response), 500)
-    
-@app.route('/skill_dept', methods=["GET"])
-def skills_by_department():
-    try:
-        department = request.args.get('department')
-        if not department:
-            return make_response(jsonify({"success": False, "error": "Missing required parameter: department"}), 400)
-
-        query = """SELECT s.skill_name AS skill_name, COUNT(e.idemployees) AS num_employees
-                    FROM employees e
-                    JOIN skills s ON s.idskills = e.skills_idskills
-                    WHERE e.department = %s
-                    GROUP BY s.skill_name
-                    ORDER BY s.skill_name"""
-        data = data_fetch(query, (department,))
-
-        response = {
-            "success": True, "department": department, "skills": data}
-
-        return make_response(jsonify(response), 200)
-    except Exception as e:
-        error_response = {"success": False, "error": "Internal server error", "details": str(e)}
-        return make_response(jsonify(error_response), 500)
-
     
 @app.route("/employees", methods=["POST"])
 def add_employees():
@@ -123,7 +81,7 @@ def add_employees():
 
         return make_response(jsonify({"message": "employee added successfully", "rows_affected": rows_affected}), 201)
     except Exception as e:
-        print(f"Error occurred: {e}")  # Debugging line
+        print(f"Error occurred: {e}")
         return make_response(jsonify({"Error": "Internal server error"}), 500)
 
     
@@ -150,6 +108,102 @@ def delete_employees(id):
         params = (id,)
         rows_affected = execute_query(query, params)
         return make_response(jsonify({"message": "employee deleted successfully", "rows_affected": rows_affected}), 200)
+    except Exception as e:
+        return make_response(jsonify({"Error": "Internal server error"}), 500)
+
+
+@app.route('/skills', methods=["GET"])
+def skills():
+    try:
+       query = """Select * FROM skills"""
+       data = data_fetch(query)
+       return make_response(jsonify(data), 200)
+    except Exception as e:
+        return make_response(jsonify({"Success": False, "Error": str(e)}), 500)
+    
+@app.route('/skillstbl', methods=["GET"])
+def skill_table():
+    try:
+        query = """SELECT s.skill_name AS skill_name, e.department AS department, 
+                    COUNT(e.idemployees) AS num_employees FROM employees e
+                    JOIN skills s ON s.idskills = e.skills_idskills
+                    GROUP BY s.skill_name, e.department
+                    ORDER BY e.department, s.skill_name"""
+        data = data_fetch(query)
+
+        response = {"success": True, "data": data}
+        
+        return make_response(jsonify(response), 200)
+    except Exception as e:
+        error_response = {"success": False, "error": "Internal server error", "details": str(e)}
+        return make_response(jsonify(error_response), 500)
+    
+@app.route('/skills_dept', methods=["GET"])
+def skills_by_department():
+    try:
+        department = request.args.get('department')
+        if not department:
+            return make_response(jsonify({"success": False, "error": "Missing required parameter: department"}), 400)
+
+        query = """SELECT s.skill_name AS skill_name, COUNT(e.idemployees) AS num_employees
+                    FROM employees e
+                    JOIN skills s ON s.idskills = e.skills_idskills
+                    WHERE e.department = %s
+                    GROUP BY s.skill_name
+                    ORDER BY s.skill_name"""
+        data = data_fetch(query, (department,))
+
+        response = {
+            "success": True, "department": department, "skills": data}
+
+        return make_response(jsonify(response), 200)
+    except Exception as e:
+        error_response = {"success": False, "error": "Internal server error", "details": str(e)}
+        return make_response(jsonify(error_response), 500)
+    
+@app.route('/skills', methods=["POST"])
+def add_skills():
+    try:
+        info = request.get_json()
+        required_fields = ["skill_name"]
+
+        if not validate_input(info, required_fields):
+            return make_response(jsonify({"Error": "Missing required fields"}), 400)
+
+        query = """INSERT INTO skills (skill_name) VALUES (%s)"""
+        params = (info["skill_name"],)
+        rows_affected = execute_query(query, params)
+
+        return make_response(jsonify({"message": "skill added successfully", "rows_affected": rows_affected}), 201)
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        return make_response(jsonify({"Error": "Internal server error"}), 500)
+
+@app.route('/skills/<int:id>', methods=["PUT"])
+def update_skills(id):
+    try:
+        info = request.get_json()
+        required_fields = ["skill_name"]
+
+        if not validate_input(info, required_fields):
+            return make_response(jsonify({"Error": "Missing required fields"}), 400)
+
+        query = """UPDATE skills SET skill_name = %s WHERE idskills = %s"""
+        params = (info["skill_name"], id)
+        rows_affected = execute_query(query, params)
+
+        return make_response(jsonify({"message": "skill updated successfully", "rows_affected": rows_affected}), 200)
+    except Exception as e:
+        return make_response(jsonify({"Error": "Internal server error"}), 500)
+
+@app.route('/skills/<int:id>', methods=["DELETE"])
+def delete_skills(id):
+    try:
+        query = """DELETE FROM skills WHERE idskills = %s"""
+        params = (id,)
+        rows_affected = execute_query(query, params)
+
+        return make_response(jsonify({"message": "skill deleted successfully", "rows_affected": rows_affected}), 200)
     except Exception as e:
         return make_response(jsonify({"Error": "Internal server error"}), 500)
 

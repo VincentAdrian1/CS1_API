@@ -8,5 +8,12 @@ This project is a Flask Rest Api application
 > cd myproject
 > py -3 -m venv .venv
 ```
-
+Activate the virtual environment | To ensure that the correct package/library versions are consistently used every time the software runs
+```bash
+.venv/Scripts/Activate
+```
+Then install dependencies from requirements.txt
+```bash
+pip install -r requirements.txt
+```
   

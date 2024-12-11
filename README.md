@@ -50,6 +50,6 @@ Then install dependencies from requirements.txt
 ```bash
 pip install -r requirements.txt
 ```
-The database can be downloaded from
-`db.txt`
+The database is provided in the repository
+`skill_gap_db.sql`
 

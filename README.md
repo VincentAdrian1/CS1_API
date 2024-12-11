@@ -13,6 +13,12 @@ Key principles of REST APIs:
 - Representation: Resources are represented in formats like JSON or XML.
 - Cacheable: Responses can be cached to improve performance.
 
+#### Common HTTP Methods in REST
+
+- #####GET: Retrieve data from the server.
+- #####POST: Send data to the server to create a new resource.
+- #####PUT: Update an existing resource on the server.
+- #####DELETE: Remove a resource from the server.
 
 
 ## Table of Contents

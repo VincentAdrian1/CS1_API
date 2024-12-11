@@ -41,8 +41,12 @@ def validate_input(info, required_fields):
             return False
     return True
 
+@app.route('/')
+def home():
+    return "<h1>Employees Information</h1>"
 
-@app.route('/employees')
+
+@app.route('/employees', methods=["GET"])
 def employees():
     try:
        query = """Select concat(employees.first_name, " ", employees.last_name) as Full_Name, 
@@ -50,9 +54,9 @@ def employees():
        data = data_fetch(query)
        return make_response(jsonify(data), 200)
     except Exception as e:
-        return make_response(jsonify({"success": False, "error": str(e)}), 500)
+        return make_response(jsonify({"Success": False, "Error": str(e)}), 500)
     
-@app.route("/employees/<int:id>")
+@app.route("/employees/<int:id>", methods=["GET"])
 def get_by_id(id):
     try:
         query = """Select concat(employees.first_name, " ", employees.last_name) as Full_Name, 
@@ -62,6 +66,28 @@ def get_by_id(id):
     except Exception as e:
         return make_response(jsonify({"Error": "Internal server error"}), 500)
 
+@app.route('/skilltbl', methods=["GET"])
+def skill_table():
+    try:
+        query = """
+        SELECT 
+            s.skill_name AS skill_name, 
+            e.department AS department, 
+            COUNT(e.idemployees) AS num_employees
+        FROM employees e
+        JOIN skills s ON s.idskills = e.skills_idskills
+        GROUP BY s.skill_name, e.department
+        ORDER BY e.department, s.skill_name
+        """
+        data = data_fetch(query)
+
+        response = {"success": True, "data": data}
+        
+        return make_response(jsonify(response), 200)
+    except Exception as e:
+        error_response = {"success": False, "error": "Internal server error", "details": str(e)}
+        return make_response(jsonify(error_response), 500)
+    
 @app.route("/employees", methods=["POST"])
 def add_employees():
     try:

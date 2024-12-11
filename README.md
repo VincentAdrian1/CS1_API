@@ -36,13 +36,13 @@ Key principles of REST APIs:
 - [Usage](#usage)
 
 ## Installation
-  Create a virtual environment in you project folder
+  Create a virtual environment in you project folder.
 ```bash
 > mkdir myproject
 > cd myproject
 > py -3 -m venv .venv
 ```
-Activate the virtual environment | To ensure that the correct package/library versions are consistently used every time the software runs
+Activate the virtual environment | To ensure that the correct package/library versions are consistently used every time the software runs.
 ```bash
 .venv/Scripts/Activate
 ```
@@ -51,5 +51,7 @@ Then install dependencies from requirements.txt
 pip install -r requirements.txt
 ```
 The database is provided in the repository
-`skill_gap_db.sql`
+`skill_gap_db.sql`.
 
+## Usage
+After the installation of dependencies and the database. Clone the project into local repository.

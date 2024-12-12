@@ -55,3 +55,5 @@ The database is provided in the repository
 
 ## Usage
 After the installation of dependencies and the database. Clone the project into local repository.
+The project is capable of CRUD functions, both for employees and skill table.
+

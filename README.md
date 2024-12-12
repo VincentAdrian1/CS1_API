@@ -80,7 +80,7 @@ To run the Flask App, type `python <app_name>.py` in the terminal
 
 - `/skills` To view or display the contents of Skills table
 - `/skillstbl` To display the number of employees that has a specific skill within the department
-- `/skills_dept` To display the specific department details (skills within the department and the number of employees that has it in the department). *To search for the depaartment or use the route, `/skills_dept?department=finance`.* Type "?department=<department name> in the url to search for a specific department.
+- `/skills_dept` To display the specific department details (skills within the department and the number of employees that has it in the department). *To search for the depaartment or use the route, `/skills_dept?department=finance`.* Type "?department=<department_name> in the url to search for a specific department.
 -  
 
 

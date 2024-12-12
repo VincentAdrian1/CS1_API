@@ -25,6 +25,7 @@ class AppTestCase(unittest.TestCase):
         self.assertIsInstance(data, list)
         self.assertGreater(len(data), 0)
 
+    # ADD Employee
     def test_add_employees(self):
         data = {
         "idemployees": "31",
@@ -40,6 +41,7 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.json["message"], "employee added successfully")
 
+    # UPDATE Employee
     def test_update_employees(self):
         data = {
         "idemployees": "31",
@@ -55,6 +57,7 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json["message"], "employee updated successfully")
 
+    # DELETE Employee
     def test_delete_employee(self):
         response = self.app.delete('/employees/24')
         data = json.loads(response.get_data(as_text=True))
@@ -86,6 +89,7 @@ class AppTestCase(unittest.TestCase):
         self.assertTrue('IT' in data['department'])
         self.assertGreater(len(data['skills']), 0)
 
+    # ADD Skill
     def test_add_skills(self):
         data = {
             "idskills": "11",
@@ -95,6 +99,7 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.json["message"], "skill added successfully")
 
+    # UPDATE Skill
     def test_update_skills(self):
         data = {
             "idskills":"11",
@@ -104,6 +109,7 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json["message"], "skill updated successfully")
 
+    # DELETE Skill
     def test_delete_skills(self):
         response = self.app.delete('/skills/11')
         self.assertEqual(response.status_code, 200)

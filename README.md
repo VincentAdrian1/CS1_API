@@ -60,3 +60,4 @@ Clone the project into local repository.
 
 The project is capable of CRUD functions, both for employees and skill table.
 
+To run the Flask App, type `python <app_name>.py` in the terminal

@@ -50,6 +50,8 @@ Then install dependencies from requirements.txt
 ```bash
 pip install -r requirements.txt
 ```
+Import `Flask` and `Flask-MySQLdb` for MySQL integration
+
 The database is provided in the repository
 `skill_gap_db.sql`.
 
@@ -61,3 +63,17 @@ Clone the project into local repository.
 The project is capable of CRUD functions, both for employees and skill table.
 
 To run the Flask App, type `python <app_name>.py` in the terminal
+
+### Employees Table Route (Note: the output is in JSON format)
+
+
+- `/employees` To view or display the contents of Employee table
+- `/employees/1` is for searching, employees can be searched by their ID
+
+
+
+
+
+
+
+

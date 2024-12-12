@@ -66,10 +66,11 @@ To run the Flask App, type `python <app_name>.py` in the terminal
 
 ### Employees Table Route (Note: the output is in JSON format)
 
-*app route is typed in the url given that is is running in localhost `http://127.0.0.1:5000`*
+*App route is typed in the url given that is is running in localhost `http://127.0.0.1:5000`*
 
 - `/employees` To view or display the contents of Employee table
 - `/employees/1` is for searching, employees can be searched by their ID
+- ADD, UPDATE, and DELETE can be used inside the `test.py`
 
 
 
